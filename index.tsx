@@ -31,17 +31,68 @@ interface Student {
   vote: VoteStatus;
 }
 
-// --- Mock Data ---
+// --- Real Data ---
 
-const FIRST_NAMES = [
-  'נועם', 'אריאל', 'עומר', 'איתי', 'דניאל', 'מאיה', 'אלה', 'ליה', 'רוני', 'גיא',
-  'יונתן', 'אדם', 'מיכאל', 'שירה', 'תמר', 'עלמה', 'אורי', 'יובל', 'עידו', 'הילה',
-  'דוד', 'שרה', 'אביגיל', 'יאיר', 'בן', 'נטע', 'ליאור', 'עמית', 'שחר', 'טל'
+const A1_STUDENT_NAMES = [
+  'איטח נגה הדס',
+  'בלומנברג יובל',
+  'בן עמי דורי',
+  'בק בארי',
+  'בק רומי',
+  'גהורזם מילי',
+  'דדון נהוראי',
+  'דובצקי אלה',
+  'הס יובל',
+  'וינר גאיה',
+  'ויס שפי יובל',
+  'חרדון אריאה',
+  'טקצ\'יוב אדם',
+  'יהודה שי-לי',
+  'יעקבי נועם',
+  'ירקוני ינאי',
+  'כהן עידו',
+  'לבנר לייה',
+  'ללום מיילי',
+  'מני אמה רחל',
+  'מרקוס מיה',
+  'נמדר בארי',
+  'עזרא נועה',
+  'פורת אביב איתן',
+  'פנקס נגה',
+  'פרידמן אלה',
+  'פרידמן אלון',
+  'שמש יאן'
 ];
 
-const LAST_NAMES = [
-  'כהן', 'לוי', 'מזרחי', 'פרץ', 'ביטון', 'דהן', 'אברהם', 'פרידמן', 'מלכה', 'אזולאי',
-  'כץ', 'יוסף', 'חדד', 'גבאי', 'שפירא', 'בר', 'סגל', 'גולן', 'עמר', 'אוחיון'
+const A2_STUDENT_NAMES = [
+  'אבני איימי רבקה',
+  'אלעד יונתן',
+  'אקשטיין דניאל',
+  'ביינה מלודי',
+  'בנימינוב שי-לי אור',
+  'גלמן הופשטטר טל',
+  'גלעדי אורי',
+  'דדון רומי',
+  'דהאן טומי',
+  'הולצר ליב',
+  'הרן רוי',
+  'חיות אלדר',
+  'חקים סורד',
+  'טאובליב יהלי',
+  'טופליאן תהל',
+  'טקץ\' אביב',
+  'כהן עופרי',
+  'מדר מיקה',
+  'מורלי יובל',
+  'מושקוביץ רומי',
+  'משעלי עלמה',
+  'סלינס גל',
+  'פקטור אילאי',
+  'צליק אריאל',
+  'רון דניאל',
+  'שהרבני ליב',
+  'שמש נדב',
+  'ששון נועם'
 ];
 
 const A3_STUDENT_NAMES = [
@@ -77,23 +128,25 @@ const A3_STUDENT_NAMES = [
 
 const generateStudents = (): Student[] => {
   const students: Student[] = [];
-  const randomClasses = ['a1', 'a2'];
   
-  // Generate random students for A1 and A2
-  randomClasses.forEach(cls => {
-    for (let i = 1; i <= 30; i++) {
-      const fName = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
-      const lName = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
-      students.push({
-        id: `${cls}-${i}`,
-        name: `${fName} ${lName}`,
-        classId: cls,
-        vote: 'pending' 
-      });
-    }
+  A1_STUDENT_NAMES.forEach((name, index) => {
+    students.push({
+      id: `a1-${index + 1}`,
+      name: name,
+      classId: 'a1',
+      vote: 'pending'
+    });
   });
 
-  // Use specific list for A3
+  A2_STUDENT_NAMES.forEach((name, index) => {
+    students.push({
+      id: `a2-${index + 1}`,
+      name: name,
+      classId: 'a2',
+      vote: 'pending'
+    });
+  });
+
   A3_STUDENT_NAMES.forEach((name, index) => {
     students.push({
       id: `a3-${index + 1}`,
@@ -139,7 +192,7 @@ const Footer = () => (
 const ElectionStats = ({ students }: { students: Student[] }) => {
   const totalStudents = students.length;
   const votesFor = students.filter(s => s.vote === 'for').length;
-  const percentage = Math.round((votesFor / totalStudents) * 100);
+  const percentage = totalStudents > 0 ? Math.round((votesFor / totalStudents) * 100) : 0;
   
   const classes = [
     { id: 'a1', label: "א'1" },
